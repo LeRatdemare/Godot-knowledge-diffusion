@@ -1,0 +1,81 @@
+[gd_scene load_steps=13 format=3 uid="uid://bfxt5x2vi88m"]
+
+[ext_resource type="Script" path="res://Scripts/pedestal.gd" id="1_ctept"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qqmkp"]
+size = Vector3(2, 0.5, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pyurg"]
+albedo_color = Color(0.219608, 0.227451, 0.462745, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_wayy0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_besph"]
+albedo_color = Color(0.819608, 0.819608, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3y07d"]
+albedo_color = Color(0.615686, 0.223529, 0.623529, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mevb0"]
+material = SubResource("StandardMaterial3D_3y07d")
+size = Vector3(2, 0.5, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_js5m3"]
+data = PackedVector3Array(-1, 0.25, 1, 1, 0.25, 1, -1, -0.25, 1, 1, 0.25, 1, 1, -0.25, 1, -1, -0.25, 1, 1, 0.25, -1, -1, 0.25, -1, 1, -0.25, -1, -1, 0.25, -1, -1, -0.25, -1, 1, -0.25, -1, 1, 0.25, 1, 1, 0.25, -1, 1, -0.25, 1, 1, 0.25, -1, 1, -0.25, -1, 1, -0.25, 1, -1, 0.25, -1, -1, 0.25, 1, -1, -0.25, -1, -1, 0.25, 1, -1, -0.25, 1, -1, -0.25, -1, 1, 0.25, 1, -1, 0.25, 1, 1, 0.25, -1, -1, 0.25, 1, -1, 0.25, -1, 1, 0.25, -1, -1, -0.25, 1, 1, -0.25, 1, -1, -0.25, -1, 1, -0.25, 1, 1, -0.25, -1, -1, -0.25, -1)
+
+[sub_resource type="FogMaterial" id="FogMaterial_jp0is"]
+density = 0.5
+albedo = Color(0.956863, 0.952941, 0, 1)
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_211ti"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 15.0
+color = Color(0.956863, 0.952941, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbiyg"]
+albedo_color = Color(0.956863, 0.952941, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hgq5s"]
+material = SubResource("StandardMaterial3D_jbiyg")
+radius = 0.05
+height = 0.05
+
+[node name="Pedestal" type="CSGCombiner3D"]
+use_collision = true
+script = ExtResource("1_ctept")
+
+[node name="socle" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_qqmkp")
+material = SubResource("StandardMaterial3D_pyurg")
+
+[node name="torus" type="CSGMesh3D" parent="."]
+mesh = SubResource("TorusMesh_wayy0")
+material = SubResource("StandardMaterial3D_besph")
+
+[node name="respawn_point" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.25, 0)
+mesh = SubResource("BoxMesh_mevb0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="respawn_point"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="respawn_point/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_js5m3")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+size = Vector3(4, 1, 4)
+shape = 0
+material = SubResource("FogMaterial_jp0is")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="FogVolume"]
+light_color = Color(0.956863, 0.952941, 0, 1)
+light_energy = 5.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="FogVolume"]
+process_material = SubResource("ParticleProcessMaterial_211ti")
+draw_pass_1 = SubResource("SphereMesh_hgq5s")
