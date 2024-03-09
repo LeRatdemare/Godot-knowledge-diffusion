@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://ca743xymtac1b"]
+
+[ext_resource type="MeshLibrary" uid="uid://c2540oamft2ma" path="res://Misc/simpletileset.tres" id="1_1rr8e"]
+[ext_resource type="Script" path="res://Scripts/Scene_2.gd" id="1_v6c33"]
+[ext_resource type="PackedScene" uid="uid://oydqsh0do27p" path="res://Agents/user_body.tscn" id="2_5l8mk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp4oq"]
+
+[sub_resource type="Sky" id="Sky_j4sig"]
+sky_material = SubResource("ProceduralSkyMaterial_pp4oq")
+
+[sub_resource type="Environment" id="Environment_y1vat"]
+background_mode = 2
+sky = SubResource("Sky_j4sig")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_l43ym"]
+
+[node name="Scene2" type="Node3D"]
+script = ExtResource("1_v6c33")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y1vat")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_l43ym")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
+mesh_library = ExtResource("1_1rr8e")
+cell_size = Vector3(2, 1, 2)
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="UserBody" parent="." instance=ExtResource("2_5l8mk")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.64057, 0)
+
+[connection signal="bake_finished" from="NavigationRegion3D" to="." method="_on_navigation_region_3d_bake_finished"]

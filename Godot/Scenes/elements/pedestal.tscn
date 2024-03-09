@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bfxt5x2vi88m"]
+[gd_scene load_steps=15 format=3 uid="uid://bfxt5x2vi88m"]
 
 [ext_resource type="Script" path="res://Scripts/pedestal.gd" id="1_ctept"]
 
@@ -12,6 +12,12 @@ albedo_color = Color(0.219608, 0.227451, 0.462745, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_besph"]
 albedo_color = Color(0.819608, 0.819608, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8flan"]
+size = Vector3(2.1, 1, 2.1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4debo"]
+data = PackedVector3Array(-1, 0.5, 1, 1, 0.5, 1, -1, -0.5, 1, 1, 0.5, 1, 1, -0.5, 1, -1, -0.5, 1, 1, 0.5, -1, -1, 0.5, -1, 1, -0.5, -1, -1, 0.5, -1, -1, -0.5, -1, 1, -0.5, -1, 1, 0.5, 1, 1, 0.5, -1, 1, -0.5, 1, 1, 0.5, -1, 1, -0.5, -1, 1, -0.5, 1, -1, 0.5, -1, -1, 0.5, 1, -1, -0.5, -1, -1, 0.5, 1, -1, -0.5, 1, -1, -0.5, -1, 1, 0.5, 1, -1, 0.5, 1, 1, 0.5, -1, -1, 0.5, 1, -1, 0.5, -1, 1, 0.5, -1, -1, -0.5, 1, 1, -0.5, 1, -1, -0.5, -1, 1, -0.5, 1, 1, -0.5, -1, -1, -0.5, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3y07d"]
 albedo_color = Color(0.615686, 0.223529, 0.623529, 1)
@@ -56,6 +62,15 @@ material = SubResource("StandardMaterial3D_pyurg")
 [node name="torus" type="CSGMesh3D" parent="."]
 mesh = SubResource("TorusMesh_wayy0")
 material = SubResource("StandardMaterial3D_besph")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_8flan")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4debo")
 
 [node name="respawn_point" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.25, 0)

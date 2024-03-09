@@ -11,11 +11,12 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _physics_process(delta):
-	if _pedestal.student == self:
-		return
-	elif (_pedestal.position - position).length() < 2:
-		_pedestal.teach(self)
-		return
+	if _pedestal != null:
+		if _pedestal.student == self:
+			return
+		elif _pedestal.student == null and (_pedestal.position - position).length() < 2:
+			_pedestal.teach(self)
+			return
 
 	# Add the gravity.
 	if not is_on_floor():

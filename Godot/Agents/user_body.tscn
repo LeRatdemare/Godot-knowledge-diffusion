@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://oydqsh0do27p"]
+
+[ext_resource type="Script" path="res://Scripts/UserBody.gd" id="1_ednu1"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qaloi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_itekp"]
+
+[node name="UserBody" type="CharacterBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.17316, 0)
+script = ExtResource("1_ednu1")
+
+[node name="UserMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_qaloi")
+
+[node name="UserCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_itekp")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809761, 0)
+current = true
