@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://j343j53nbdah"]
+[gd_scene load_steps=6 format=3 uid="uid://j343j53nbdah"]
 
 [ext_resource type="Script" path="res://Scripts/Agent.gd" id="1_h33h8"]
+[ext_resource type="AudioStream" uid="uid://coicgf8knxp5u" path="res://Sounds/ufo_floating-86547.mp3" id="2_byofi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iohrq"]
 albedo_color = Color(0, 0.705882, 0.713726, 1)
@@ -11,7 +12,6 @@ material = SubResource("StandardMaterial3D_iohrq")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ledyq"]
 
 [node name="Agent" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2.12839, 0)
 script = ExtResource("1_h33h8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -21,3 +21,11 @@ mesh = SubResource("CapsuleMesh_tja81")
 shape = SubResource("CapsuleShape3D_ledyq")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_byofi")
+attenuation_model = 2
+volume_db = -40.0
+max_db = 0.0
+autoplay = true
+max_distance = 15.0

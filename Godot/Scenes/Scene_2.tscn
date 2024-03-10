@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ca743xymtac1b"]
+[gd_scene load_steps=10 format=3 uid="uid://ca743xymtac1b"]
 
-[ext_resource type="MeshLibrary" uid="uid://c2540oamft2ma" path="res://Misc/simpletileset.tres" id="1_1rr8e"]
+[ext_resource type="MeshLibrary" uid="uid://dx0r0i6uhhcg2" path="res://Misc/simpletileset.tres" id="1_1rr8e"]
 [ext_resource type="Script" path="res://Scripts/Scene_2.gd" id="1_v6c33"]
 [ext_resource type="PackedScene" uid="uid://oydqsh0do27p" path="res://Agents/user_body.tscn" id="2_5l8mk"]
+[ext_resource type="PackedScene" uid="uid://hc7cn4perytq" path="res://Scenes/elements/moving_platform.tscn" id="4_q1eau"]
+[ext_resource type="PackedScene" uid="uid://s6erm50qcg7t" path="res://Scenes/elements/platform.tscn" id="5_xx7u2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp4oq"]
 
@@ -29,9 +31,14 @@ navigation_mesh = SubResource("NavigationMesh_l43ym")
 [node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
 mesh_library = ExtResource("1_1rr8e")
 cell_size = Vector3(2, 1, 2)
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="UserBody" parent="." instance=ExtResource("2_5l8mk")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.64057, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.42454, 0)
+
+[node name="Moving_Platform" parent="." instance=ExtResource("4_q1eau")]
+
+[node name="Platform" parent="." instance=ExtResource("5_xx7u2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 
 [connection signal="bake_finished" from="NavigationRegion3D" to="." method="_on_navigation_region_3d_bake_finished"]

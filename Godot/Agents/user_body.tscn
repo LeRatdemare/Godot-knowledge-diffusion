@@ -19,3 +19,6 @@ shape = SubResource("CapsuleShape3D_itekp")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809761, 0)
 current = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true

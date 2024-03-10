@@ -42,6 +42,7 @@ mesh = SubResource("BoxMesh_xegca")
 shape = SubResource("ConcavePolygonShape3D_rwh01")
 
 [node name="slope" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("PrismMesh_cnjrv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="slope"]
@@ -50,6 +51,7 @@ mesh = SubResource("PrismMesh_cnjrv")
 shape = SubResource("ConcavePolygonShape3D_k4hs3")
 
 [node name="block" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_1lrmj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="block"]

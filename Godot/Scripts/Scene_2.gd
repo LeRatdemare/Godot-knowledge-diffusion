@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var _agent_template = preload("res://Agents/agent.tscn")
+@export var _pedestal_template = preload("res://Scenes/elements/pedestal.tscn")
 @export var terrain_size = 15
 @export var nb_agents = 25
 
@@ -25,7 +26,13 @@ func _ready():
 					_gridmap.set_cell_item(Vector3(x, y, z), 2)
 	_navigation.bake_navigation_mesh()
 	# Spawn Agents after navigation is baked
-
+	
+	# Spawn pedestals
+	var pedestal = _pedestal_template.instantiate()
+	pedestal.position = Vector3(10, 1.5, -3)
+	$UserBody.pedestal = pedestal
+	add_child(pedestal)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

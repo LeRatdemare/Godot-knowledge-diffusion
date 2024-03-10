@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://hc7cn4perytq"]
+
+[ext_resource type="Script" path="res://Scripts/moving_platform.gd" id="1_kvx3c"]
+
+[sub_resource type="Curve3D" id="Curve3D_lapwq"]
+_data = {
+"points": PackedVector3Array(-6, 0, 0, 6, 0, 0, -3.07, 0, 0, -6, 0, 0, 6, 0, 0, -3, 8, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v3ml8"]
+size = Vector3(8, 1, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmu11"]
+albedo_color = Color(0.313726, 0.313726, 0.313726, 0.105882)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ghnsn"]
+material = SubResource("StandardMaterial3D_lmu11")
+size = Vector3(8, 1, 8)
+
+[sub_resource type="Animation" id="Animation_2jne3"]
+resource_name = "up_down"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Moving_Platform/Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdh4a"]
+_data = {
+"up_down": SubResource("Animation_2jne3")
+}
+
+[node name="Moving_Platform" type="Node3D"]
+script = ExtResource("1_kvx3c")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_lapwq")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999997, 0, 0, 0, 0.999997, -3.07, 0, 0)
+rotation_mode = 0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
+remote_path = NodePath("../../../AnimatableBody3D")
+update_rotation = false
+update_scale = false
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999997, 0, 0, 0, 0.999997, -3.07, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+shape = SubResource("BoxShape3D_v3ml8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+mesh = SubResource("BoxMesh_ghnsn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_tdh4a")
+}
